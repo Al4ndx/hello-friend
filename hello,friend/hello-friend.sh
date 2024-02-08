@@ -1,4 +1,5 @@
 #!/bin/bash
+sudo pacman -S figlet
 figlet hello  friend
 
 echo "|------------------------------|"
