@@ -1,19 +1,42 @@
 #!/bin/bash
-figlet hello, friend
+figlet hello  friend
+
+echo "|------------------------------|"
+echo "|     by: Cyclus secuirity     |"
+echo "|          ahutor: Alan Perez  |"
+echo "|------------------------------|"
+
 sudo pacman -S nmap
-# Dirección IP a escanear
-echo "ip:"
+git clone https://aur.archlinux.org/snapd.git
+cd snapd
+makepkg -si
+sudo systemctl enable --now snapd.socket
+sudo ln -s /var/lib/snapd/snap /snap
+sudo snap install crackmapexec
+
+
+
+echo "la ip:"
 read ip
 
+
+# Direcci  n IP a escanear
+
 # Opciones de Nmap
-opciones="-Pn -T4 -A"
+opciones="-Pn"
+versiones="-sC -sV"
+# Escanear la direcci  n IP con Nmap
+nmap $opciones $ip
 
-# Escanear la dirección IP con Nmap
-nmap $opciones $ip | grep -o "open\s\+\([0-9]\+\)/tcp\s\+\([^\)]\+\)" | sort -u > puertos_versiones.txt
+echo "puertos:"
+read puertos
 
-# Mostrar los puertos y versiones
-echo "Puertos abiertos y versiones:"
-cat puertos_versiones.txt
+nmap $versiones $puertos $ip
 
-# Eliminar el archivo temporal
-rm puertos_versiones.txt
+
+
+
+
+
+
+
